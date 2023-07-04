@@ -11,11 +11,20 @@ import { Image } from '@chakra-ui/react'
 import Link from 'next/link'
 
 
+async function getOnePokemon(url: any) {
+  const data = await fetch(url)
+    
+  if (!data.ok) {
+    throw new Error('Failed to fetch pokemon data')
+  }
+
+  return (data).json()
+}
+
 async function getPokemon() {
   const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=8')
-  
+
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch pokemon data')
   }
  
@@ -25,28 +34,30 @@ async function getPokemon() {
 
 export default async function Home() {
   const dataPokemon = await getPokemon()
+
   const resultPokemon = dataPokemon.results
 
-  // add type to pokemon 
-  resultPokemon[0].type = ['Grass', 'Poison']
-  resultPokemon[1].type = ['Grass', 'Poison']
-  resultPokemon[2].type = ['Grass', 'Poison']
-  resultPokemon[3].type = ['Fire']
-  resultPokemon[4].type = ['Fire']
-  resultPokemon[5].type = ['Fire', 'Flying']
-  resultPokemon[6].type = ['Water']
-  resultPokemon[7].type = ['Water']
+  var pokemonsDetail:any[] = []
+  for (let i = 0; i < resultPokemon.length; i++){
+    pokemonsDetail.push({
+      name: resultPokemon[i].name,
+      data: await getOnePokemon(resultPokemon[i].url)
+  })
+  }
 
   // add color to pokemon 
-  resultPokemon[0].color = ['#49d0b1', '#5edfc6'] // green
-  resultPokemon[1].color = ['#49d0b1', '#5edfc6'] 
-  resultPokemon[2].color = ['#49d0b1', '#5edfc6'] 
-  resultPokemon[3].color = ['#fc6c6d', '#fc7f7f']  // red
-  resultPokemon[4].color = ['#fc6c6d', '#fc7f7f']
-  resultPokemon[5].color = ['#fc6c6d', '#fc7f7f']
-  resultPokemon[6].color = ['#76beff', '#85cafe'] // blue
-  resultPokemon[7].color = ['#76beff', '#85cafe'] 
-  
+  pokemonsDetail[0].data.color = ['#49d0b1', '#5edfc6'] // green
+  pokemonsDetail[1].data.color = ['#49d0b1', '#5edfc6'] 
+  pokemonsDetail[2].data.color = ['#49d0b1', '#5edfc6'] 
+  pokemonsDetail[3].data.color = ['#fc6c6d', '#fc7f7f']  // red
+  pokemonsDetail[4].data.color = ['#fc6c6d', '#fc7f7f']
+  pokemonsDetail[5].data.color = ['#fc6c6d', '#fc7f7f']
+  pokemonsDetail[6].data.color = ['#76beff', '#85cafe'] // blue
+  pokemonsDetail[7].data.color = ['#76beff', '#85cafe'] 
+
+  for (let i = 0; i < pokemonsDetail.length; i++){
+    pokemonsDetail[i].name = pokemonsDetail[i].name.charAt(0).toUpperCase() + pokemonsDetail[i].name.slice(1);
+  }
 
   return (
     <main className={styles.main}>
@@ -59,13 +70,13 @@ export default async function Home() {
           templateColumns='repeat(2, 1fr)'
           gap={'0.6em'}
         >
-          {resultPokemon.map((pokemon: any, index:any) => (
+          {pokemonsDetail.map((pokemon: any, index:any) => (
             <Link href={`/${index + 1}`}>
               <GridItem
                 display={'block'}
                 borderRadius={'2xl'}
                 p={'1em'}
-                bgColor={pokemon.color[0]}
+                bgColor={pokemon.data.color[0]}
                 pl={'1.3em'}
                 height={'9em'}
               >
@@ -78,15 +89,15 @@ export default async function Home() {
 
                 <Flex>
                   <Flex direction={'column'} gap={'0.5em'}>
-                    {pokemon.type.map((tipe:any) => (
-                      <Box bgColor={pokemon.color[1]} borderRadius={'3xl'} pl={'0.8em'} pr={'0.8em'}>
-                        <Text>{tipe}</Text>
+                    {pokemon.data.types.map((tipe:any) => (
+                      <Box bgColor={pokemon.data.color[1]} borderRadius={'3xl'} pl={'0.8em'} pr={'0.8em'}>
+                        <Text fontSize={'sm'}>{tipe.type.name}</Text>
                       </Box>
                     ))}
                   </Flex>
                   <Spacer />
-                  <Flex>
-                    <Image src={'gaming.png'} alt='pokemon' width={'3.5em'} height={'3.5em'} zIndex={'0'} />
+                  <Flex mt={'-0.5em'} >
+                    <Image src={`https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/00${index+1}.png`} alt='pokemon' width={'4.5em'} height={'4.5em'}/>
                   </Flex>
 
                 </Flex>
