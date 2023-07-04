@@ -139,10 +139,10 @@ export default async function Page({ params }: { params: { slug: number } }) {
                         </Grid>
                         </TabPanel>
                         <TabPanel>
-                        <p>Tiga</p>
+                        <p>Evolution Section</p>
                         </TabPanel>
                         <TabPanel>
-                        <p>Empat</p>
+                        <p>Move Section</p>
                         </TabPanel>
                     </TabPanels>
                     </Tabs>
