@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: { slug: number } }) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5}}
         >
-            <a href='/'><Text color={'blackAlpha.600'} fontSize={'2xl'} as={'b'} pl={'1em'} opacity={1}>Pokedex</Text></a>
+            <a href='/'><Text color={'blackAlpha.600'} fontSize={'2xl'} as={'b'} pl={'1em'} opacity={1}>Back</Text></a>
             <motion.div
                 initial={{ opacity: 0, x:-10}}
                 animate={{ opacity: 1, x: 0 }}
