@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: { slug: number } }) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5}}
         >
-            <Link href='/'><Text color={'black'} fontSize={'2xl'} as={'b'} pl={'1em'} opacity={0.6}>Pokedex</Text></Link>
+            <Link href='/'><Text color={'blackAlpha.600'} fontSize={'2xl'} as={'b'} pl={'1em'} opacity={1}>Pokedex</Text></Link>
             <motion.div
                 initial={{ opacity: 0, x:-10}}
                 animate={{ opacity: 1, x: 0 }}
@@ -70,7 +70,7 @@ export default async function Page({ params }: { params: { slug: number } }) {
                         </Flex>
                     </Flex>
                     <Flex justifyContent={'center'} alignItems={'center'}>
-                        <Text as={'b'} fontSize={'1xl'} p={'0.5em'}>#00{params.slug}</Text>
+                        <Text as={'b'} fontSize={'1xl'} p={'0.5em'} color={'white'}>#00{params.slug}</Text>
                     </Flex>                
                 </Flex>
             </motion.div>    
