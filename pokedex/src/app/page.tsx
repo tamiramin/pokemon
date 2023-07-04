@@ -6,7 +6,7 @@ import styles from './page.module.css'
 import { Box, Container } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Flex, Spacer } from '@chakra-ui/react'
-import { Grid, GridItem } from '@chakra-ui/react'
+import { Grid, GridItem, SimpleGrid } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import Link from 'next/link'
 
@@ -61,7 +61,7 @@ export default async function Home() {
 
   return (
     <main className={styles.main}>
-      <Container width={'100vw'} minHeight={'100vh'} bg={'#f2f3f2'}>
+      <Container width={'100vw'} minHeight={'100vh'} bg={'#f2f3f2'} p={'0.5em'}>
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -71,14 +71,14 @@ export default async function Home() {
             <Text fontSize={'4xl'} color={'black'} as={'b'} >Pokedex</Text>
           </Container>
         </motion.div>
-        <Grid mt={'2em'}
+        <Grid
+          mt={'2em'}
           p={2}
-          templateColumns='repeat(2, 1fr)'
           gap={'0.6em'}
+          templateColumns={'repeat(2, 1fr)'}
         >
           {pokemonsDetail.map((pokemon: any, index: any) => (
             <motion.div
-              whileTap={{ scale: 1.2 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: index*0.3}}
@@ -96,14 +96,15 @@ export default async function Home() {
                     color={'white'}
                     fontWeight={'600'}
                     pt={'0.5em'}
-                    fontSize={'2xl'}
+                    fontSize={'1.3em'}
+                    
                   >{pokemon.name}</Text>
 
                   <Flex>
                     <Flex direction={'column'} gap={'0.5em'}>
                       {pokemon.data.types.map((tipe:any) => (
                         <Box bgColor={pokemon.data.color[1]} borderRadius={'3xl'} pl={'0.8em'} pr={'0.8em'}>
-                          <Text fontSize={'sm'} color={'white'}>{tipe.type.name}</Text>
+                          <Text fontSize={'0.8em'} color={'white'}>{tipe.type.name}</Text>
                         </Box>
                       ))}
                     </Flex>
